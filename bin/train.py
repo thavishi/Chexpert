@@ -312,27 +312,32 @@ def run(args):
     optimizer = get_optimizer(model.parameters(), cfg)
 
     src_folder = os.path.dirname(os.path.abspath(__file__)) + '/../'
+    print(src_folder)
     dst_folder = os.path.join(args.save_path, 'classification')
     rc, size = subprocess.getstatusoutput('du --max-depth=0 %s | cut -f1'
                                           % src_folder)
-    if rc != 0:
-        raise Exception('Copy folder error : {}'.format(rc))
-    rc, err_msg = subprocess.getstatusoutput('cp -R %s %s' % (src_folder,
-                                                              dst_folder))
-    if rc != 0:
-        raise Exception('copy folder error : {}'.format(err_msg))
-
+    # if rc != 0:
+    #     raise Exception('Copy folder error : {}'.format(rc))
+    # rc, err_msg = subprocess.getstatusoutput('cp -R %s %s' % (src_folder,
+    #                                                           dst_folder))
+    # if rc != 0:
+    #     raise Exception('copy folder error : {}'.format(err_msg))
+    
+    print(cfg.train_csv)
     copyfile(cfg.train_csv, os.path.join(args.save_path, 'train.csv'))
     copyfile(cfg.dev_csv, os.path.join(args.save_path, 'dev.csv'))
-
+    
+    print("loading data 1")
     dataloader_train = DataLoader(
         ImageDataset(cfg.train_csv, cfg, mode='train'),
         batch_size=cfg.train_batch_size, num_workers=args.num_workers,
         drop_last=True, shuffle=True)
+    print("loading data 2")
     dataloader_dev = DataLoader(
         ImageDataset(cfg.dev_csv, cfg, mode='dev'),
         batch_size=cfg.dev_batch_size, num_workers=args.num_workers,
         drop_last=False, shuffle=False)
+    print("loading data 3")
     dev_header = dataloader_dev.dataset._label_header
 
     summary_train = {'epoch': 0, 'step': 0}

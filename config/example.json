@@ -1,6 +1,6 @@
 {
-    "train_csv": "/Path/to/train.csv",
-    "dev_csv": "/Path/to/dev.csv",
+    "train_csv": "/content/gdrive/My Drive/Colab Notebooks/CheXpert-v1.0-small/train.csv",
+    "dev_csv": "/content/gdrive/My Drive/Colab Notebooks/Chexpert/config/dev.csv",
     "backbone": "densenet121",
     "width": 512,
     "height": 512,
